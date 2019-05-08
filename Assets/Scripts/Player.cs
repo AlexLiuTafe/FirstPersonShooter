@@ -28,9 +28,16 @@ public class Player : MonoBehaviour
         float inputH = Input.GetAxis("Horizontal");
         float inputV = Input.GetAxis("Vertical");
         Move(inputH, inputV);
-
+        
         if(IsGrounded())
         {
+            if(Input.GetKey(KeyCode.LeftShift))//Sprint
+            {
+                Move(inputH * 2f, inputV * 2f);
+                //Checking the value of the speed
+                print("Current Motion: X=" + motion.x+"Z" + motion.z);
+                  
+            }
             if (Input.GetButtonDown("Jump"))
             {
                 motion.y = jumpHeight;
