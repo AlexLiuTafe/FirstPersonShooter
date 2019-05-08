@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float runSpeed = 8f;
+    public float runSpeed = 10f;
     public float walkSpeed = 6f;
-    public float gravity = 10f;
-    public float jumpHeight = 15f;
+    public float gravity = -10f;
+    public float jumpHeight = 5f;
     public float groundRayDistance = 1.1f;
 
     private CharacterController controller; // Reference to character controller
     private Vector3 motion;// is the movement offset per frame
+    public bool isJumping = false;
 
 
 
@@ -25,36 +26,71 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         float inputH = Input.GetAxis("Horizontal");
         float inputV = Input.GetAxis("Vertical");
-        Move(inputH, inputV);
-        
+        bool inputRun = Input.GetKey(KeyCode.LeftShift);
+        bool inputJump = Input.GetButtonDown("Jump");
+        //Put horizontal & vertical input into vector
+        Vector3 inputDir = new Vector3(inputH, 0f, inputV);
+        // Convert local direction to world space direction(relative to Player)
+        inputDir = transform.TransformDirection(inputDir);
+        //if input exceeds length of 1
+        if (inputDir.magnitude > 1f)
+        {
+            //Normalize it to 1f!
+            inputDir.Normalize();
+        }
+        if (inputRun)
+        {
+            Run(inputDir.x, inputDir.z);
+            print("Motion :X" + motion.x + "Motion Z:" + motion.z);//Show RunSpeed
+        }
+        else
+        {
+            Walk(inputDir.x, inputDir.z);
+            print("Motion :X" + motion.x + "Motion Z:" + motion.z);//Show WalkSpeed
+        }
+       
         if(IsGrounded())
         {
-            if(Input.GetKey(KeyCode.LeftShift))//Sprint
+            //if IS grounded AND press "Jump"
+            if (IsGrounded()&& inputJump)
             {
-                Move(inputH * 2f, inputV * 2f);
-                //Checking the value of the speed
-                print("Current Motion: X=" + motion.x+"Z" + motion.z);
-                  
+                Jump(); //Make player jump
             }
-            if (Input.GetButtonDown("Jump"))
+            //if is NOT Grounded AND isJumping
+            if(!IsGrounded()&&isJumping)
             {
-                motion.y = jumpHeight;
+                //Set jumping is false(so cant jump)
+                isJumping = false;
             }
         }
-        motion.y -= gravity * Time.deltaTime; 
+        motion.y += gravity * Time.deltaTime; 
 
         controller.Move(motion * Time.deltaTime);
     }
-    void Move(float inputH, float inputV)
+    void Move(float inputH, float inputV,float speed)
     {
         Vector3 direction = new Vector3(inputH, 0f, inputV);
         // Convert local direction to world space direction(relative to Player)
-        direction = transform.TransformDirection(direction);
+        //direction = transform.TransformDirection(direction);
 
-        motion.x = direction.x * walkSpeed;
-        motion.z = direction.z * walkSpeed;
+        motion.x = direction.x * speed;
+        motion.z = direction.z * speed;
+    }
+    public void Walk(float inputH,float inputV)
+    {
+        Move(inputH, inputV, walkSpeed);
+    }
+    public void Run(float inputH, float inputV)
+    {
+        Move(inputH, inputV, runSpeed);
+    }
+    public void Jump()
+    {
+        motion.y = jumpHeight;
+        isJumping = true;//We are jumping
     }
     bool IsGrounded()
     {

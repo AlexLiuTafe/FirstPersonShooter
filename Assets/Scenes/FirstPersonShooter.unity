@@ -2924,6 +2924,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8896437396279264061, guid: 7dfc15afbc7914f4f8bb47c32df96ab2,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 779214679876407388, guid: 7dfc15afbc7914f4f8bb47c32df96ab2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2984,11 +2989,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 53a247503d5e94b40b0c641005b48808, type: 2}
-    - target: {fileID: 8896437396279264061, guid: 7dfc15afbc7914f4f8bb47c32df96ab2,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6577259523159845926, guid: 7dfc15afbc7914f4f8bb47c32df96ab2,
         type: 3}
       propertyPath: m_RootOrder
@@ -3025,7 +3025,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50b9a8ae36fc55248806e92e1bc7eba7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runSpeed: 8
+  runSpeed: 10
   walkSpeed: 6
   gravity: 10
   jumpHeight: 15
