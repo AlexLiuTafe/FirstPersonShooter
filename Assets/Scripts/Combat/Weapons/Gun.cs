@@ -20,6 +20,19 @@ public class Gun : Weapon
 
     public void Reload()
     {
+        //*NOTE
+        // if(currentReserve >0)
+        //   If(curClip < maxClip)
+        //      int difference = maxClip - currentClip
+        //      curClip += difference
+        //      curReserve -= difference
+        //          if(currentReserve < currentClip)
+        //              if(difference <= curReserve)
+        //              currentClip += difference
+        //              currentReserve -= difference
+        //          if(difference > currentReserve)
+        //              currentClip += currentReserve
+        //              currentReserve = 0
         // If there is ammo in reserve
         if (currentReserve >0)
         {
@@ -52,11 +65,11 @@ public class Gun : Weapon
         currentClip--; //currentClip = current clip -1/currentClip -=1
         //Get origin + direction for bullet
         Camera attachedCamera = Camera.main;
-        Transform camTranform = attachedCamera.transform;
+        Transform camTransform = attachedCamera.transform;
         Vector3 lineOrigin = shotOrigin.position;
-        Vector3 direction = camTranform.forward;
+        Vector3 direction = camTransform.forward;
         //Spawn Bullet
-        GameObject clone = Instantiate(projecilePrefab, camTranform.position, camTranform.rotation);
+        GameObject clone = Instantiate(projecilePrefab, camTransform.position, camTransform.rotation);
         Projectile projectile = clone.GetComponent<Projectile>();
         projectile.Fire(lineOrigin, direction);
         // Reset ability to attack

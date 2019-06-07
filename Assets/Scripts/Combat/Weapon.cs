@@ -17,6 +17,7 @@ public abstract class Weapon : MonoBehaviour
         {
             canAttack = true;
         }
+        Debug.Log(attackTimer);
 
     }
     //Call the 'base.Attack()' function to reset the ability to attack
